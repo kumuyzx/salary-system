@@ -59,17 +59,11 @@
 
       <el-dialog v-model="dialogFormVisible" title="员工账号登录" width="400" height="">
         <el-form :model="form" label-position="left" hide-required-asterisk="true">
-          <el-form-item label="工号" :label-width="formLabelWidth" prop="id" :rules="[
-            { required: true, message: '请输入工号', trigger: 'blur' },
-            { min: 4, max: 4, message: '请输入4位员工号', trigger: 'blur' },
-          ]">
-            <el-input v-model="form.id" />
+          <el-form-item label="工号" :label-width="formLabelWidth" prop="id">
+            <el-input v-model="form.id" @keyup.enter="login" />
           </el-form-item>
-          <el-form-item label="密码" :label-width="formLabelWidth" prop="pass" :rules="[
-            { required: true, message: '请输入密码', trigger: 'blur' },
-            { min: 6, max: 18, message: '请输入6到18位的密码', trigger: 'blur' },
-          ]">
-            <el-input v-model="form.pass" type="password" autocomplete="off" />
+          <el-form-item label="密码" :label-width="formLabelWidth" prop="pass">
+            <el-input v-model="form.pass" type="password" autocomplete="off" @keyup.enter="login" />
           </el-form-item>
         </el-form>
         <template #footer>
@@ -92,6 +86,7 @@
 <script>
 import { selectWords } from './api/post';
 import { Location, Setting, Menu, Document } from '@element-plus/icons-vue';
+import { ElMessage } from 'element-plus';
 
 export default {
   name: 'Select',
@@ -153,6 +148,22 @@ export default {
       this.form.pass = '';
     },
     login() {
+      if (!this.form.id) {
+        ElMessage.error('请输入工号');
+        return;
+      }
+      if (this.form.id.length !== 4) {
+        ElMessage.error('请输入4位员工号');
+        return;
+      }
+      if (!this.form.pass) {
+        ElMessage.error('请输入密码');
+        return;
+      }
+      if (this.form.pass.length < 6 || this.form.pass.length > 18) {
+        ElMessage.error('请输入6到18位的密码');
+        return;
+      }
       this.goHome();
       this.$axios.post('/login/loginToSystem', { id: this.form.id, pass: this.form.pass })
         .then(response => {
@@ -181,11 +192,13 @@ export default {
             this.power1 = true;
             this.power2 = true;
             this.power3 = true;
+            ElMessage.error('工号或密码错误，请重新输入');
             this.goHome();
           }
         })
         .catch(error => {
           console.error('Error fetching data:', error);
+          ElMessage.error('登录失败，请稍后重试');
         });
     },
     handleOpen(key) {
