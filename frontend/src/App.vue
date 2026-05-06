@@ -2,7 +2,7 @@
   <div class="common-layout">
     <el-container>
       <el-header>
-        <el-page-header :icon="null" title="员工资薪管理系统">
+        <el-page-header :icon="null" title="企业薪酬管理平台">
           <template #content>
             <div class="flex items-center">
               <el-avatar :size="32" class="mr-3"
@@ -16,8 +16,8 @@
           </template>
           <template #extra>
             <div class="flex items-center">
-              <el-button type="primary" @click="handleLogin">登录</el-button>
-              <el-button type="danger" @click="logout">注销</el-button>
+              <el-button v-if="power === '0'" type="primary" @click="handleLogin">登录</el-button>
+              <el-button v-else type="danger" @click="logout">注销</el-button>
             </div>
           </template>
         </el-page-header>
@@ -29,24 +29,24 @@
               <el-menu ref="menu" :default-active="menuActive" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
                 <el-sub-menu index="1" :disabled="power1">
                   <template #title>
-                    <span>个人管理</span>
+                    <span>个人中心</span>
                   </template>
-                  <el-menu-item index="1-1" id="selfInfo" @click="goSelfInfo">个人信息</el-menu-item>
-                  <el-menu-item index="1-2" @click="goSelfSalary">工资查询</el-menu-item>
+                  <el-menu-item index="1-1" id="selfInfo" @click="goSelfInfo">我的档案</el-menu-item>
+                  <el-menu-item index="1-2" @click="goSelfSalary">我的薪资</el-menu-item>
                 </el-sub-menu>
                 <el-sub-menu index="2" :disabled="power2">
                   <template #title>
-                    <span>财务管理</span>
+                    <span>薪酬财务</span>
                   </template>
-                  <el-menu-item index="2-1" @click="goStuffSalary">员工工资管理</el-menu-item>
-                  <el-menu-item index="2-2" @click="goStuffBonus">年终奖查询</el-menu-item>
+                  <el-menu-item index="2-1" @click="goStuffSalary">薪资台账</el-menu-item>
+                  <el-menu-item index="2-2" @click="goStuffBonus">年度绩效奖金</el-menu-item>
                 </el-sub-menu>
                 <el-sub-menu index="3" :disabled="power3">
                   <template #title>
-                    <span>人事管理</span>
+                    <span>人力资源</span>
                   </template>
-                  <el-menu-item index="3-1" @click="goStuffInfo">员工信息管理</el-menu-item>
-                  <el-menu-item index="3-2" @click="goStuffChecking">员工考勤管理</el-menu-item>
+                  <el-menu-item index="3-1" @click="goStuffInfo">员工档案</el-menu-item>
+                  <el-menu-item index="3-2" @click="goStuffChecking">考勤维护</el-menu-item>
                 </el-sub-menu>
               </el-menu>
             </el-col>
@@ -57,11 +57,11 @@
         </el-main>
       </el-container>
 
-      <el-dialog v-model="dialogFormVisible" title="用户登录" width="400" height="">
+      <el-dialog v-model="dialogFormVisible" title="员工账号登录" width="400" height="">
         <el-form :model="form" label-position="left" hide-required-asterisk="true">
           <el-form-item label="工号" :label-width="formLabelWidth" prop="id" :rules="[
-            { required: true, message: '请输入员工号', trigger: 'blur' },
-            { min: 8, max: 8, message: '请输入正确格式的员工号', trigger: 'blur' },
+            { required: true, message: '请输入工号', trigger: 'blur' },
+            { min: 4, max: 4, message: '请输入4位员工号', trigger: 'blur' },
           ]">
             <el-input v-model="form.id" />
           </el-form-item>
@@ -111,7 +111,7 @@ export default {
       name: '未登录',
       id: ' ',
       power: '0',
-      status: ["游客", "员工", "财务", "人事"],
+      status: ["访客", "员工", "财务专员", "人事专员"],
       allMenusCollapsed: '',
       menuActive: '',
       keyIndex: '',

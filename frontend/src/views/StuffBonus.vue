@@ -1,7 +1,7 @@
 <template>
 
   <div class="block">
-    <el-date-picker v-model="value3" type="year" value-format="YYYY" placeholder="Pick a year" />
+    <el-date-picker v-model="value3" type="year" value-format="YYYY" placeholder="选择发放年度" />
     <el-button type="primary" plain style="margin-left: 10px;" @click="selectBonus">查询</el-button>
   </div>
 
@@ -10,7 +10,7 @@
   <el-table :data="data" border style="width: 100%">
     <el-table-column prop="employee_id" label="工号" width="180" />
     <el-table-column prop="employee_name" label="姓名" width="180" />
-    <el-table-column prop="yearly_bonus" label="年终奖" />
+    <el-table-column prop="yearly_bonus" label="年度绩效奖金" />
   </el-table>
 </template>
 

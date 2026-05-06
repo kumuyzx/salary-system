@@ -1,7 +1,7 @@
 <template>
 
   <div class="block">
-    <el-input v-model="input" style="width: 240px" placeholder="请输入员工号" />
+    <el-input v-model="input" style="width: 240px" placeholder="输入工号筛选，留空查看全部" />
     <el-button type="primary" plain style="margin-left: 10px;" @click="selectInfo">查询</el-button>
   </div>
 
@@ -11,19 +11,19 @@
     <el-table-column prop="id" label="工号" />
     <el-table-column prop="name" label="姓名" />
     <el-table-column prop="month" label="月份" />
-    <el-table-column prop="over_hours" label="正常加班" />
-    <el-table-column prop="weekend_overtime" label="周末加班" />
-    <el-table-column prop="holiday_overtime" label="节假日加班" />
-    <el-table-column prop="late_day" label="迟到" />
-    <el-table-column prop="early_leave" label="早退" />
-    <el-table-column fixed="right" label="操作" width="120">
+    <el-table-column prop="over_hours" label="工作日加班(小时)" />
+    <el-table-column prop="weekend_overtime" label="周末加班(小时)" />
+    <el-table-column prop="holiday_overtime" label="节假日加班(小时)" />
+    <el-table-column prop="late_day" label="迟到(次)" />
+    <el-table-column prop="early_leave" label="早退(次)" />
+    <el-table-column fixed="right" label="维护" width="120">
       <template #default="scope">
-        <el-button type="info" size="small" @click="edit(scope.row)">操作</el-button>
+        <el-button type="info" size="small" @click="edit(scope.row)">编辑</el-button>
       </template>
     </el-table-column>
   </el-table>
 
-  <el-dialog align-center="true" v-model="centerDialogVisible" title="修改信息" width="400" center>
+  <el-dialog align-center="true" v-model="centerDialogVisible" title="考勤记录维护" width="400" center>
 
     <el-form ref="ruleFormRef" style="max-width: 300px" :model="ruleForm" status-icon :rules="rules" label-width="auto"
       class="demo-ruleForm">
@@ -36,7 +36,7 @@
       <el-form-item label="月份">
         <el-input v-model="month" disabled />
       </el-form-item>
-      <el-form-item label="正常加班">
+      <el-form-item label="工作日加班">
         <el-input-number v-model="over_hours" :min="0" :max="1000" />
       </el-form-item>
       <el-form-item label="周末加班">
@@ -45,13 +45,13 @@
       <el-form-item label="节假日加班">
         <el-input-number v-model="holiday_overtime" :min="0" :max="1000" />
       </el-form-item>
-      <el-form-item label="请假">
+      <el-form-item label="请假天数">
         <el-input-number v-model="leave_day" :min="0" :max="1000" />
       </el-form-item>
-      <el-form-item label="迟到">
+      <el-form-item label="迟到次数">
         <el-input-number v-model="late_day" :min="0" :max="1000" />
       </el-form-item>
-      <el-form-item label="早退">
+      <el-form-item label="早退次数">
         <el-input-number v-model="early_leave" :min="0" :max="1000" />
       </el-form-item>
     </el-form>

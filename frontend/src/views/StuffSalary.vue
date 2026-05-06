@@ -15,18 +15,18 @@
   <br>
 
   <el-table :data="data" border style="width: 100%">
-    <el-table-column prop="id" label="员工号" />
+    <el-table-column prop="id" label="工号" />
     <el-table-column prop="name" label="姓名" />
     <el-table-column prop="Dname" label="部门" />
     <el-table-column prop="month" label="月份" />
-    <el-table-column prop="wage" label="基本工资" />
-    <el-table-column prop="subsidy" label="加班津贴" />
-    <el-table-column prop="bonus" label="奖金" />
-    <el-table-column prop="from_checking_in" label="考勤" />
-    <el-table-column prop="deductMoney" label="五险一金" />
-    <el-table-column prop="before_tax" label="税前" />
-    <el-table-column prop="tax" label="税" />
-    <el-table-column prop="total" label="税后" />
+    <el-table-column prop="wage" label="岗位工资" />
+    <el-table-column prop="subsidy" label="加班补贴" />
+    <el-table-column prop="bonus" label="绩效奖金" />
+    <el-table-column prop="from_checking_in" label="考勤调整" />
+    <el-table-column prop="deductMoney" label="社保公积金" />
+    <el-table-column prop="before_tax" label="应税工资" />
+    <el-table-column prop="tax" label="个人所得税" />
+    <el-table-column prop="total" label="实发工资" />
   </el-table>
 </template>
 

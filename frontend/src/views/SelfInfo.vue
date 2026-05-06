@@ -1,22 +1,22 @@
 <template>
 
-  <el-descriptions title="员工个人信息" direction="vertical" column=2 size=large border>
+  <el-descriptions title="我的员工档案" direction="vertical" column=2 size=large border>
     <el-descriptions-item label="姓名" :span="2">
       {{ user[0].name }}
     </el-descriptions-item>
     <el-descriptions-item label="性别">
       {{ user[0].sex }}
     </el-descriptions-item>
-    <el-descriptions-item label="员工号">
+    <el-descriptions-item label="工号">
       {{ this.id }}
     </el-descriptions-item>
-    <el-descriptions-item label="电话">
+    <el-descriptions-item label="联系电话">
       {{ user[0].phone }}
     </el-descriptions-item>
-    <el-descriptions-item label="邮箱">
+    <el-descriptions-item label="企业邮箱">
       {{ user[0].email }}
     </el-descriptions-item>
-    <el-descriptions-item label="职级">
+    <el-descriptions-item label="岗位职级">
       <el-tag size="large">{{ user[0].grade }}</el-tag>
     </el-descriptions-item>
     <el-descriptions-item label="入职时间">
@@ -25,9 +25,9 @@
   </el-descriptions>
 
   <br>
-  <el-button @click="centerDialogVisible = true" type="info" plain style="float: right;">修改信息</el-button>
+  <el-button @click="centerDialogVisible = true" type="info" plain style="float: right;">更新联系方式</el-button>
 
-  <el-dialog v-model="centerDialogVisible" title="修改信息" width="500" center>
+  <el-dialog v-model="centerDialogVisible" title="更新员工档案" width="500" center>
 
     <el-form :model="form" label-width="auto" style="max-width: 600px">
       <el-form-item label="姓名">
@@ -36,13 +36,13 @@
       <el-form-item label="性别">
         <el-input v-model="user[0].sex" />
       </el-form-item>
-      <el-form-item label="电话">
+      <el-form-item label="联系电话">
         <el-input v-model="user[0].phone" />
       </el-form-item>
-      <el-form-item label="邮箱">
+      <el-form-item label="企业邮箱">
         <el-input v-model="user[0].email" />
       </el-form-item>
-      <el-form-item label="密码">
+      <el-form-item label="登录密码">
         <el-input type="password" show-password v-model="user[0].password" />
       </el-form-item>
     </el-form>

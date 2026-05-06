@@ -1,7 +1,7 @@
 <template>
 
   <div class="block">
-    <el-input v-model="input" style="width: 240px" placeholder="请输入员工号" />
+    <el-input v-model="input" style="width: 240px" placeholder="输入工号筛选，留空查看全部" />
     <el-button type="primary" plain style="margin-left: 10px;" @click="selectInfo">查询</el-button>
   </div>
 
@@ -11,11 +11,11 @@
     <el-table-column prop="id" label="工号" />
     <el-table-column prop="name" label="姓名" />
     <el-table-column prop="sex" label="性别" />
-    <el-table-column prop="phone" label="电话号码" />
-    <el-table-column prop="email" label="邮箱" />
-    <el-table-column prop="grade" label="职级" />
+    <el-table-column prop="phone" label="联系电话" />
+    <el-table-column prop="email" label="企业邮箱" />
+    <el-table-column prop="grade" label="岗位职级" />
     <el-table-column prop="Dname" label="部门" />
-    <el-table-column fixed="right" label="操作" width="120">
+    <el-table-column fixed="right" label="账号维护" width="120">
       <template #default="scope">
         <el-button type="info" size="small" @click="reset(scope.row)">重置密码</el-button>
       </template>
