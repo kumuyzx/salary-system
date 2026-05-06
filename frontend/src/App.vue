@@ -22,10 +22,10 @@
           </template>
         </el-page-header>
       </el-header>
-      <el-container>
-        <el-aside width="200px">
+      <el-container class="workspace-layout">
+        <el-aside width="200px" class="workspace-aside">
           <el-row class="tac">
-            <el-col :span="12">
+            <el-col :span="12" class="menu-column">
               <el-menu ref="menu" :default-active="menuActive" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
                 <el-sub-menu index="1" :disabled="power1">
                   <template #title>
@@ -52,7 +52,7 @@
             </el-col>
           </el-row>
         </el-aside>
-        <el-main>
+        <el-main class="workspace-main">
           <router-view />
         </el-main>
       </el-container>
@@ -154,7 +154,7 @@ export default {
     },
     login() {
       this.goHome();
-      this.$axios.post('http://localhost:8080/login/loginToSystem', { id: this.form.id, pass: this.form.pass })
+      this.$axios.post('/login/loginToSystem', { id: this.form.id, pass: this.form.pass })
         .then(response => {
           var data = response.data
           if (data.length == 1) {
@@ -205,7 +205,7 @@ export default {
       this.goHome();
     },
     selectEmployee() {
-      this.$axios.post('http://localhost:8080/select/selectEmployee', { name: this.input })
+      this.$axios.post('/select/selectEmployee', { name: this.input })
         .then(response => {
           this.data = response.data;
         })
@@ -235,5 +235,107 @@ export default {
 
 .el-dialog {
   --el-dialog-margin-top: 30vh;
+}
+
+.common-layout {
+  min-height: 100vh;
+}
+
+.el-page-header {
+  min-height: 60px;
+  padding: 0 16px;
+}
+
+.workspace-main {
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .el-header {
+    --el-header-height: auto;
+  }
+
+  .el-page-header {
+    align-items: flex-start;
+    min-height: auto;
+    padding: 10px 12px;
+  }
+
+  .el-page-header__header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .el-page-header__left,
+  .el-page-header__content,
+  .el-page-header__extra {
+    min-width: 0;
+  }
+
+  .el-page-header__content {
+    flex: 1 1 100%;
+    order: 3;
+  }
+
+  .workspace-layout {
+    flex-direction: column;
+  }
+
+  .workspace-aside {
+    width: 100% !important;
+  }
+
+  .workspace-aside .el-row,
+  .workspace-aside .menu-column,
+  .workspace-aside .el-menu {
+    width: 100%;
+  }
+
+  .el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 100%;
+    min-height: auto;
+  }
+
+  .workspace-main {
+    padding: 12px;
+  }
+
+  .block {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .block .el-input,
+  .block .el-date-editor {
+    width: 100% !important;
+  }
+
+  .block .el-button {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+
+  .el-table {
+    min-width: 760px;
+  }
+
+  .el-dialog {
+    --el-dialog-width: calc(100vw - 24px);
+    --el-dialog-margin-top: 10vh;
+  }
+
+  .el-form-item {
+    display: block;
+  }
+
+  .el-form-item__label {
+    justify-content: flex-start;
+    margin-bottom: 6px;
+  }
+
+  .el-input-number {
+    width: 100%;
+  }
 }
 </style>

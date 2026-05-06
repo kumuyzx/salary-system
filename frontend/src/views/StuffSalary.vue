@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     selectSalary() {
-      this.$axios.post('http://localhost:8080/select/selectStuffSalary', { 
+      this.$axios.post('/select/selectStuffSalary', { 
         start: this.value1[0],
         end: this.value1[1], })
         .then(response => {

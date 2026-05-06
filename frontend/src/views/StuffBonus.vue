@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     selectBonus() {
-      this.$axios.post('http://localhost:8080/select/selectStuffBonus', {  year: this.value3 })
+      this.$axios.post('/select/selectStuffBonus', {  year: this.value3 })
         .then(response => {
           this.data = response.data;
           console.log(response.data)

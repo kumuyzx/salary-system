@@ -1,10 +1,13 @@
 import axios from 'axios'
 
+const baseURL = import.meta.env.VITE_API_BASE_URL || '/api'
+
 const service = axios.create({
-    baseURL: 'http://localhost:8080/',
+    baseURL,
+    timeout: 10000,
 })
 
-axios.interceptors.request.use(
+service.interceptors.request.use(
     function (config) {
         return config
     },
@@ -13,7 +16,7 @@ axios.interceptors.request.use(
     }
 )
 
-axios.interceptors.response.use(
+service.interceptors.response.use(
     function (config) {
         return config
     },

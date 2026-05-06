@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     selectInfo() {
-      this.$axios.post('http://localhost:8080/select/selectStuffChecking', { id: this.input })
+      this.$axios.post('/select/selectStuffChecking', { id: this.input })
         .then(response => {
           this.data = response.data;
           console.log(response.data)
@@ -113,7 +113,7 @@ export default {
     },
     editChecking() {
       console.log(this.early_leave)
-      this.$axios.post('http://localhost:8080/edit/editChecking',
+      this.$axios.post('/edit/editChecking',
         {
           id: this.id,
           name: this.name,

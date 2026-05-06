@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     selectInfo() {
-      this.$axios.post('http://localhost:8080/select/selectStuffInfo', {  id: this.input })
+      this.$axios.post('/select/selectStuffInfo', {  id: this.input })
         .then(response => {
           this.data = response.data;
           console.log(response.data)
@@ -46,7 +46,7 @@ export default {
         });
     },
     reset(row) {
-      this.$axios.post('http://localhost:8080/edit/resetPassword', {  id: row.id })
+      this.$axios.post('/edit/resetPassword', {  id: row.id })
         .then(response => {
         })
         .catch(error => {

@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     selectEmployee() {
-      this.$axios.post('http://localhost:8080/select/selectEmployee', { id: this.id })
+      this.$axios.post('/select/selectEmployee', { id: this.id })
         .then(response => {
           this.user = response.data;
           console.log(response.data)
@@ -93,7 +93,7 @@ export default {
         });
     },
     editEmployee() {
-      this.$axios.post('http://localhost:8080/edit/editEmployee',
+      this.$axios.post('/edit/editEmployee',
         { 
           id: this.user[0].id,
           name: this.user[0].name,
