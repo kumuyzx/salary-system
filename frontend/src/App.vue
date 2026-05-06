@@ -1,95 +1,110 @@
 <template>
-  <div class="common-layout">
-    <el-container>
-      <el-header>
-        <el-page-header :icon="null" title="企业薪酬管理平台">
-          <template #content>
-            <div class="flex items-center">
-              <el-avatar :size="32" class="mr-3"
-                src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
-              <span class="text-large font-600 mr-3" style="margin: 5px;"> {{ name }} </span>
-              <span class="text-sm mr-2" style="color: var(--el-text-color-regular); margin: 5px;">
-                {{ id }}
-              </span>
-              <el-tag style="margin: 5px;">{{ status[power] }}</el-tag>
-            </div>
-          </template>
-          <template #extra>
-            <div class="flex items-center">
-              <el-button v-if="power === '0'" type="primary" @click="handleLogin">登录</el-button>
-              <el-button v-else type="danger" @click="logout">注销</el-button>
-            </div>
-          </template>
-        </el-page-header>
-      </el-header>
-      <el-container class="workspace-layout">
-        <el-aside width="200px" class="workspace-aside">
-          <el-row class="tac">
-            <el-col :span="12" class="menu-column">
-              <el-menu ref="menu" :default-active="menuActive" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
-                <el-sub-menu index="1" :disabled="power1">
-                  <template #title>
-                    <span>个人中心</span>
-                  </template>
-                  <el-menu-item index="1-1" id="selfInfo" @click="goSelfInfo">我的档案</el-menu-item>
-                  <el-menu-item index="1-2" @click="goSelfSalary">我的薪资</el-menu-item>
-                </el-sub-menu>
-                <el-sub-menu index="2" :disabled="power2">
-                  <template #title>
-                    <span>薪酬财务</span>
-                  </template>
-                  <el-menu-item index="2-1" @click="goStuffSalary">薪资台账</el-menu-item>
-                  <el-menu-item index="2-2" @click="goStuffBonus">年度绩效奖金</el-menu-item>
-                </el-sub-menu>
-                <el-sub-menu index="3" :disabled="power3">
-                  <template #title>
-                    <span>人力资源</span>
-                  </template>
-                  <el-menu-item index="3-1" @click="goStuffInfo">员工档案</el-menu-item>
-                  <el-menu-item index="3-2" @click="goStuffChecking">考勤维护</el-menu-item>
-                </el-sub-menu>
-              </el-menu>
-            </el-col>
-          </el-row>
-        </el-aside>
-        <el-main class="workspace-main">
-          <router-view />
-        </el-main>
-      </el-container>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-mark">薪</div>
+        <div>
+          <h1>企业薪酬管理平台</h1>
+          <p>薪资、奖金、考勤与员工档案</p>
+        </div>
+      </div>
 
-      <el-dialog v-model="dialogFormVisible" title="员工账号登录" width="400" height="">
-        <el-form :model="form" label-position="left" hide-required-asterisk="true">
-          <el-form-item label="工号" :label-width="formLabelWidth" prop="id">
-            <el-input v-model="form.id" @keyup.enter="login" />
-          </el-form-item>
-          <el-form-item label="密码" :label-width="formLabelWidth" prop="pass">
-            <el-input v-model="form.pass" type="password" autocomplete="off" @keyup.enter="login" />
-          </el-form-item>
-        </el-form>
-        <template #footer>
-          <div class="dialog-footer">
-            <el-button type="primary" @click="login">
-              登录
-            </el-button>
-            <el-button @click="dialogFormVisible = false">
-              取消
-            </el-button>
+      <div class="header-actions">
+        <div class="user-card">
+          <el-avatar :size="36" class="user-avatar">
+            {{ name === '未登录' ? '访' : name.slice(0, 1) }}
+          </el-avatar>
+          <div class="user-meta">
+            <strong>{{ name }}</strong>
+            <span>{{ id.trim() || '未分配工号' }}</span>
           </div>
-        </template>
-      </el-dialog>
+          <el-tag effect="light" round>{{ status[power] }}</el-tag>
+        </div>
+        <el-button v-if="power === '0'" type="primary" @click="handleLogin">
+          登录
+        </el-button>
+        <el-button v-else type="danger" plain @click="logout">
+          注销
+        </el-button>
+      </div>
+    </header>
 
-    </el-container>
+    <div class="app-body">
+      <aside class="app-sidebar">
+        <el-menu
+          ref="menu"
+          :default-active="menuActive"
+          class="app-menu"
+          @open="handleOpen"
+          @close="handleClose"
+        >
+          <el-sub-menu index="1" :disabled="power1">
+            <template #title>
+              <el-icon><User /></el-icon>
+              <span>个人中心</span>
+            </template>
+            <el-menu-item index="1-1" id="selfInfo" @click="goSelfInfo">我的档案</el-menu-item>
+            <el-menu-item index="1-2" @click="goSelfSalary">我的薪资</el-menu-item>
+          </el-sub-menu>
+          <el-sub-menu index="2" :disabled="power2">
+            <template #title>
+              <el-icon><Money /></el-icon>
+              <span>薪酬财务</span>
+            </template>
+            <el-menu-item index="2-1" @click="goStuffSalary">薪资台账</el-menu-item>
+            <el-menu-item index="2-2" @click="goStuffBonus">年度绩效奖金</el-menu-item>
+          </el-sub-menu>
+          <el-sub-menu index="3" :disabled="power3">
+            <template #title>
+              <el-icon><OfficeBuilding /></el-icon>
+              <span>人力资源</span>
+            </template>
+            <el-menu-item index="3-1" @click="goStuffInfo">员工档案</el-menu-item>
+            <el-menu-item index="3-2" @click="goStuffChecking">考勤维护</el-menu-item>
+          </el-sub-menu>
+        </el-menu>
+      </aside>
+
+      <main class="app-content">
+        <router-view />
+      </main>
+    </div>
+
+    <el-dialog v-model="dialogFormVisible" title="员工账号登录" width="420" class="login-dialog">
+      <div class="login-copy">
+        <h2>欢迎回来</h2>
+        <p>请输入员工工号和密码访问平台。</p>
+      </div>
+      <el-form :model="form" label-position="top" hide-required-asterisk="true">
+        <el-form-item label="工号" prop="id">
+          <el-input v-model="form.id" placeholder="例如 1001" @keyup.enter="login" />
+        </el-form-item>
+        <el-form-item label="密码" prop="pass">
+          <el-input v-model="form.pass" type="password" autocomplete="off" show-password @keyup.enter="login" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取消</el-button>
+          <el-button type="primary" @click="login">登录</el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 
 <script>
-import { selectWords } from './api/post';
-import { Location, Setting, Menu, Document } from '@element-plus/icons-vue';
+import { Money, OfficeBuilding, User } from '@element-plus/icons-vue';
 import { ElMessage } from 'element-plus';
 
 export default {
   name: 'Select',
+  components: {
+    Money,
+    OfficeBuilding,
+    User,
+  },
   data() {
     return {
       dialogFormVisible: false,
@@ -204,6 +219,9 @@ export default {
     handleOpen(key) {
       this.menuList.push(key);
     },
+    handleClose(key) {
+      this.menuList = this.menuList.filter(item => item !== key);
+    },
     logout() {
       this.menuActive = '';
       for (var i = 0; i < this.menuList.length; i ++) {
@@ -232,123 +250,258 @@ export default {
 </script>
 
 <style>
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
-  min-height: 400px;
-}
-
-.el-header {
-  --el-header-padding: 0 20px;
-  --el-header-height: 60px;
-  box-sizing: border-box;
-  flex-shrink: 0;
-  height: var(--el-header-height);
-  padding: 0px;
-}
-
-.el-dialog {
-  --el-dialog-margin-top: 30vh;
-}
-
-.common-layout {
+.app-shell {
   min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(37, 99, 235, 0.06), rgba(37, 99, 235, 0) 320px),
+    var(--app-bg);
 }
 
-.el-page-header {
-  min-height: 60px;
-  padding: 0 16px;
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  min-height: 72px;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid var(--app-border);
+  backdrop-filter: blur(14px);
 }
 
-.workspace-main {
-  overflow-x: auto;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
 }
 
-@media (max-width: 768px) {
-  .el-header {
-    --el-header-height: auto;
-  }
+.brand-mark {
+  display: grid;
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  color: #fff;
+  background: var(--app-primary);
+  border-radius: 8px;
+  font-weight: 800;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.24);
+}
 
-  .el-page-header {
+.brand h1 {
+  color: var(--app-heading);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+
+.brand p {
+  color: var(--app-muted);
+  font-size: 12px;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 6px 10px;
+  background: var(--app-surface-soft);
+  border: 1px solid var(--app-border);
+  border-radius: 8px;
+}
+
+.user-avatar {
+  color: var(--app-primary);
+  background: var(--app-primary-soft);
+  font-weight: 800;
+}
+
+.user-meta {
+  display: grid;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.user-meta strong {
+  max-width: 120px;
+  overflow: hidden;
+  color: var(--app-heading);
+  font-size: 13px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-meta span {
+  color: var(--app-muted);
+  font-size: 12px;
+}
+
+.app-body {
+  display: grid;
+  grid-template-columns: 236px minmax(0, 1fr);
+  gap: 20px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px 24px 28px;
+}
+
+.app-sidebar {
+  position: sticky;
+  top: 92px;
+  align-self: start;
+  overflow: hidden;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius);
+  box-shadow: var(--app-shadow);
+}
+
+.app-menu {
+  width: 100%;
+  border-right: 0;
+  padding: 8px;
+}
+
+.app-menu .el-sub-menu__title,
+.app-menu .el-menu-item {
+  border-radius: 6px;
+}
+
+.app-menu .el-menu-item.is-active {
+  color: var(--app-primary);
+  background: var(--app-primary-soft);
+  font-weight: 700;
+}
+
+.app-content {
+  min-width: 0;
+}
+
+.login-copy {
+  margin-bottom: 18px;
+}
+
+.login-copy h2 {
+  color: var(--app-heading);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.login-copy p {
+  color: var(--app-muted);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+@media (max-width: 900px) {
+  .app-header {
     align-items: flex-start;
-    min-height: auto;
-    padding: 10px 12px;
-  }
-
-  .el-page-header__header {
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .el-page-header__left,
-  .el-page-header__content,
-  .el-page-header__extra {
-    min-width: 0;
-  }
-
-  .el-page-header__content {
-    flex: 1 1 100%;
-    order: 3;
-  }
-
-  .workspace-layout {
     flex-direction: column;
+    padding: 12px 14px;
   }
 
-  .workspace-aside {
-    width: 100% !important;
-  }
-
-  .workspace-aside .el-row,
-  .workspace-aside .menu-column,
-  .workspace-aside .el-menu {
+  .header-actions {
     width: 100%;
+    justify-content: space-between;
   }
 
-  .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 100%;
-    min-height: auto;
+  .user-card {
+    flex: 1;
   }
 
-  .workspace-main {
-    padding: 12px;
+  .app-body {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 12px 0 20px;
   }
 
-  .block {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+  .app-sidebar {
+    position: static;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
 
-  .block .el-input,
-  .block .el-date-editor {
-    width: 100% !important;
+  .app-menu {
+    padding: 6px 10px;
   }
 
-  .block .el-button {
-    margin-left: 0 !important;
-    width: 100%;
+  .app-content {
+    overflow-x: hidden;
   }
 
   .el-table {
     min-width: 760px;
   }
 
-  .el-dialog {
-    --el-dialog-width: calc(100vw - 24px);
-    --el-dialog-margin-top: 10vh;
+  .login-dialog {
+    --el-dialog-width: min(300px, 80vw);
+    --el-dialog-margin-top: 14vh;
   }
 
-  .el-form-item {
-    display: block;
+  .login-dialog :deep(.el-dialog__body) {
+    padding: 10px 14px 2px;
   }
 
-  .el-form-item__label {
-    justify-content: flex-start;
-    margin-bottom: 6px;
+  .login-dialog :deep(.el-dialog__header) {
+    padding: 14px 14px 0;
   }
 
-  .el-input-number {
+  .login-dialog :deep(.el-dialog__footer) {
+    padding: 6px 14px 14px;
+  }
+}
+
+@media (max-width: 520px) {
+  .brand h1 {
+    font-size: 17px;
+  }
+
+  .brand p {
+    display: none;
+  }
+
+  .header-actions {
+    align-items: center;
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .header-actions > .el-button {
+    flex: 0 0 auto;
+    width: auto;
+  }
+
+  .dialog-footer {
+    flex-direction: column-reverse;
+  }
+
+  .dialog-footer .el-button {
     width: 100%;
+    margin-left: 0 !important;
   }
 }
 </style>

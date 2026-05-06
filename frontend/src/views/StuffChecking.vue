@@ -1,27 +1,33 @@
 <template>
+  <section class="page-panel">
+    <div class="page-title">
+      <div>
+        <h2>考勤维护</h2>
+        <p>维护员工月度加班、请假、迟到和早退记录。</p>
+      </div>
+    </div>
 
-  <div class="block">
-    <el-input v-model="input" style="width: 240px" placeholder="输入工号筛选，留空查看全部" />
-    <el-button type="primary" plain style="margin-left: 10px;" @click="selectInfo">查询</el-button>
-  </div>
+    <div class="block">
+      <el-input v-model="input" style="width: 240px" placeholder="输入工号筛选，留空查看全部" />
+      <el-button type="primary" plain style="margin-left: 10px;" @click="selectInfo">查询</el-button>
+    </div>
 
-  <br>
-
-  <el-table :data="data" border style="width: 100%">
-    <el-table-column prop="id" label="工号" />
-    <el-table-column prop="name" label="姓名" />
-    <el-table-column prop="month" label="月份" />
-    <el-table-column prop="over_hours" label="工作日加班(小时)" />
-    <el-table-column prop="weekend_overtime" label="周末加班(小时)" />
-    <el-table-column prop="holiday_overtime" label="节假日加班(小时)" />
-    <el-table-column prop="late_day" label="迟到(次)" />
-    <el-table-column prop="early_leave" label="早退(次)" />
-    <el-table-column fixed="right" label="维护" width="120">
-      <template #default="scope">
-        <el-button type="info" size="small" @click="edit(scope.row)">编辑</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+    <el-table :data="data" border style="width: 100%">
+      <el-table-column prop="id" label="工号" />
+      <el-table-column prop="name" label="姓名" />
+      <el-table-column prop="month" label="月份" />
+      <el-table-column prop="over_hours" label="工作日加班(小时)" />
+      <el-table-column prop="weekend_overtime" label="周末加班(小时)" />
+      <el-table-column prop="holiday_overtime" label="节假日加班(小时)" />
+      <el-table-column prop="late_day" label="迟到(次)" />
+      <el-table-column prop="early_leave" label="早退(次)" />
+      <el-table-column fixed="right" label="维护" width="120">
+        <template #default="scope">
+          <el-button type="info" size="small" @click="edit(scope.row)">编辑</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+  </section>
 
   <el-dialog align-center="true" v-model="centerDialogVisible" title="考勤记录维护" width="400" center>
 

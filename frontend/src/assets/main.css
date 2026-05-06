@@ -1,35 +1,120 @@
 @import './base.css';
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  min-height: 100vh;
   font-weight: normal;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+.page-panel {
+  overflow-x: auto;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius);
+  box-shadow: var(--app-shadow);
+  padding: 20px;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+.page-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
 }
 
-@media (min-width: 1024px) {
+.page-title h2 {
+  color: var(--app-heading);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+
+.page-title p {
+  color: var(--app-muted);
+  font-size: 13px;
+  margin-top: 3px;
+}
+
+.block,
+.page-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.el-table {
+  --el-table-header-bg-color: #f8fafc;
+  --el-table-header-text-color: #334155;
+  --el-table-row-hover-bg-color: #f8fbff;
+  border-radius: var(--app-radius);
+  overflow: hidden;
+}
+
+.el-table th.el-table__cell {
+  font-weight: 700;
+}
+
+.el-descriptions {
+  --el-descriptions-table-border: 1px solid var(--app-border);
+}
+
+.el-descriptions__title {
+  color: var(--app-heading);
+  font-weight: 700;
+}
+
+.el-button {
+  border-radius: 6px;
+}
+
+.el-input__wrapper,
+.el-textarea__inner {
+  border-radius: 6px;
+}
+
+.el-dialog {
+  border-radius: var(--app-radius);
+}
+
+@media (max-width: 768px) {
   body {
-    display: flex;
-    place-items: center;
+    font-size: 14px;
   }
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+  .page-panel {
+    padding: 14px;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    box-shadow: none;
+  }
+
+  .page-title {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: 14px;
+  }
+
+  .page-title h2 {
+    font-size: 18px;
+  }
+
+  .block,
+  .page-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .block .el-input,
+  .block .el-date-editor,
+  .block .el-button,
+  .page-toolbar .el-input,
+  .page-toolbar .el-date-editor,
+  .page-toolbar .el-button {
+    width: 100% !important;
+    margin-left: 0 !important;
   }
 }

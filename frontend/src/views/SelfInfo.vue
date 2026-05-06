@@ -1,31 +1,37 @@
 <template>
+  <section class="page-panel profile-panel">
+    <div class="page-title">
+      <div>
+        <h2>我的员工档案</h2>
+        <p>查看并维护个人基础信息和联系方式。</p>
+      </div>
+      <el-button @click="centerDialogVisible = true" type="primary" plain>更新联系方式</el-button>
+    </div>
 
-  <el-descriptions title="我的员工档案" direction="vertical" column=2 size=large border>
-    <el-descriptions-item label="姓名" :span="2">
-      {{ user[0].name }}
-    </el-descriptions-item>
-    <el-descriptions-item label="性别">
-      {{ user[0].sex }}
-    </el-descriptions-item>
-    <el-descriptions-item label="工号">
-      {{ this.id }}
-    </el-descriptions-item>
-    <el-descriptions-item label="联系电话">
-      {{ user[0].phone }}
-    </el-descriptions-item>
-    <el-descriptions-item label="企业邮箱">
-      {{ user[0].email }}
-    </el-descriptions-item>
-    <el-descriptions-item label="岗位职级">
-      <el-tag size="large">{{ user[0].grade }}</el-tag>
-    </el-descriptions-item>
-    <el-descriptions-item label="入职时间">
-      {{ user[0].hiredate }}
-    </el-descriptions-item>
-  </el-descriptions>
-
-  <br>
-  <el-button @click="centerDialogVisible = true" type="info" plain style="float: right;">更新联系方式</el-button>
+    <el-descriptions direction="vertical" column=2 size=large border>
+      <el-descriptions-item label="姓名" :span="2">
+        {{ user[0].name }}
+      </el-descriptions-item>
+      <el-descriptions-item label="性别">
+        {{ user[0].sex }}
+      </el-descriptions-item>
+      <el-descriptions-item label="工号">
+        {{ this.id }}
+      </el-descriptions-item>
+      <el-descriptions-item label="联系电话">
+        {{ user[0].phone }}
+      </el-descriptions-item>
+      <el-descriptions-item label="企业邮箱">
+        {{ user[0].email }}
+      </el-descriptions-item>
+      <el-descriptions-item label="岗位职级">
+        <el-tag size="large">{{ user[0].grade }}</el-tag>
+      </el-descriptions-item>
+      <el-descriptions-item label="入职时间">
+        {{ user[0].hiredate }}
+      </el-descriptions-item>
+    </el-descriptions>
+  </section>
 
   <el-dialog v-model="centerDialogVisible" title="更新员工档案" width="500" center>
 
@@ -114,4 +120,10 @@ export default {
 </script>
 
 
-<style scoped></style>
+<style scoped>
+@media (max-width: 768px) {
+  .profile-panel :deep(.el-descriptions__body) {
+    overflow-x: auto;
+  }
+}
+</style>
