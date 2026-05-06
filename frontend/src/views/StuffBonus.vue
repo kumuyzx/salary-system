@@ -1,0 +1,44 @@
+<template>
+
+  <div class="block">
+    <el-date-picker v-model="value3" type="year" value-format="YYYY" placeholder="Pick a year" />
+    <el-button type="primary" plain style="margin-left: 10px;" @click="selectBonus">查询</el-button>
+  </div>
+
+  <br>
+
+  <el-table :data="data" border style="width: 100%">
+    <el-table-column prop="employee_id" label="工号" width="180" />
+    <el-table-column prop="employee_name" label="姓名" width="180" />
+    <el-table-column prop="yearly_bonus" label="年终奖" />
+  </el-table>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      value3: '2024',
+      data: [],
+    }
+  },
+  created() {
+    this.selectBonus();
+  },
+  methods: {
+    selectBonus() {
+      this.$axios.post('http://localhost:8080/select/selectStuffBonus', {  year: this.value3 })
+        .then(response => {
+          this.data = response.data;
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    },
+  }
+}
+</script>
+
+
+<style scoped></style>

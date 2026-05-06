@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: EmployeeSalaryManage_end
+
+#  datasource:
+#    url: jdbc:mysql://121.40.89.90:3306/money?useSSL=false&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: root-5508
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+
+#  datasource:
+#    # 修改为 SQL Server 的连接格式，注意 1433 是默认端口，money 是你的数据库名
+#    url: jdbc:sqlserver://localhost:1433;DatabaseName=money;encrypt=false;trustServerCertificate=true
+#    username: sa                # SQL Server 默认管理员是 sa，或者你自定义的账号
+#    password: yzxshuai.123
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/money?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: yzxshuai.123
+    driver-class-name: com.mysql.cj.jdbc.Driver
